@@ -1,0 +1,12 @@
+SABC0
+abc0
+S
+8
+S aSBC
+S aBC
+aB ab
+bB bb
+Bc bc
+CB BC
+cC Cc
+cB Bc
