@@ -9,7 +9,7 @@ std::istream& operator>>(std::istream& in, AFD& afd)
 	{
 		std::string str;
 		in >> str;
-		afd.stari.emplace_back(str);
+		afd.m_stari.emplace_back(str);
 		--numar;
 	}
 	in >> numar;
@@ -17,7 +17,7 @@ std::istream& operator>>(std::istream& in, AFD& afd)
 	{
 		char chr;
 		in >> chr;
-		afd.sigma.emplace_back(chr);
+		afd.m_sigma.emplace_back(chr);
 		--numar;
 	}
 	in >> numar;
@@ -30,16 +30,16 @@ std::istream& operator>>(std::istream& in, AFD& afd)
 		in >> str2;
 		AFD::StareSimbol stareSimbol = std::make_pair(str1, chr);
 		AFD::StareSimbolStare stareSimbolStare = std::make_pair(stareSimbol, str2);
-		afd.delta.emplace_back(stareSimbolStare);
+		afd.m_delta.emplace_back(stareSimbolStare);
 		--numar;
 	}
-	in >> afd.stareInitiala;
+	in >> afd.m_stareInitiala;
 	in >> numar;
 	while (numar)
 	{
 		std::string str;
 		in >> str;
-		afd.finale.emplace_back(str);
+		afd.m_finale.emplace_back(str);
 		--numar;
 	}
 	return in;
@@ -47,50 +47,27 @@ std::istream& operator>>(std::istream& in, AFD& afd)
 
 std::ostream& operator<<(std::ostream& out, const AFD& afd)
 {
-	//out << "\nStarile automatului sunt: ";
-	//for (const auto& stare : afd.stari)
-	//{
-	//	out << stare << " ";
-	//}
-	//out << "\n\nAlfabetul de intrare este: ";
-	//for (const auto& simbol : afd.sigma)
-	//{
-	//	out << simbol << " ";
-	//}
-	//out << "\n\nFunctia de tranzitie este:\n";
-	//for (const auto& stareSimbolStare : afd.delta)
-	//{
-	//	const auto& stareSimbol = stareSimbolStare.first;
-	//	out << (char)235 << "(" << stareSimbol.first << ", " << stareSimbol.second << ") = " << stareSimbolStare.second << '\n';
-	//}
-	//out << "\nStarea initiala este: " << afd.stareInitiala << '\n';
-	//out << "\nStarile finale sunt: ";
-	//for (const auto& stare : afd.finale)
-	//{
-	//	out << stare << " ";
-	//}
-	//out << "\n\n";
 	out << "  " << (char)235 << " ";
-	for (const auto& simbol : afd.sigma)
+	for (const auto& simbol : afd.m_sigma)
 	{
 		out << "| " << simbol << "  ";
 	}
-	for(const auto& stareLinie : afd.stari)
+	for(const auto& stareLinie : afd.m_stari)
 	{
 		out << "\n----";
-		for (const auto& simbol : afd.sigma)
+		for (const auto& simbol : afd.m_sigma)
 		{
 			out << "|----";
 		}
 		out << '\n';
-		if (stareLinie == afd.stareInitiala)
+		if (stareLinie == afd.m_stareInitiala)
 		{
 			out << "->" << stareLinie;
 		}
 		else
 		{
 			bool ok = false;
-			for (const auto& stareFinala : afd.finale)
+			for (const auto& stareFinala : afd.m_finale)
 			{
 				if (stareLinie == stareFinala)
 				{
@@ -104,10 +81,10 @@ std::ostream& operator<<(std::ostream& out, const AFD& afd)
 				out << "  " << stareLinie;
 			}
 		}
-		for (const auto& simbol : afd.sigma)
+		for (const auto& simbol : afd.m_sigma)
 		{
 			bool ok = false;
-			for (const auto& stareSimbolStare : afd.delta)
+			for (const auto& stareSimbolStare : afd.m_delta)
 			{
 				if (std::make_pair(stareLinie, simbol) == stareSimbolStare.first)
 				{
@@ -126,13 +103,13 @@ std::ostream& operator<<(std::ostream& out, const AFD& afd)
 	return out;
 }
 
-uint8_t AFD::verificare(std::string cuvant)
+uint8_t AFD::Verificare(std::string cuvant)
 {
-	std::string stare = stareInitiala;
+	std::string stare = m_stareInitiala;
 	for (const auto& simbol : cuvant)
 	{
 		bool gasit = false;
-		for (const auto& stareSimbolStare : delta)
+		for (const auto& stareSimbolStare : m_delta)
 		{
 			if (std::make_pair(stare, simbol) == stareSimbolStare.first)
 			{
@@ -146,7 +123,7 @@ uint8_t AFD::verificare(std::string cuvant)
 			return 2;
 		}
 	}
-	for (const auto& stareFinala : finale)
+	for (const auto& stareFinala : m_finale)
 	{
 		if (stareFinala == stare)
 		{

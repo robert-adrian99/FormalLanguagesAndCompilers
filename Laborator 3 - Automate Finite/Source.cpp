@@ -17,7 +17,7 @@ void alegeAFD()
 		std::cout << "Introduceti un cuvant din " << (char)228 << "* pentru a verifica daca este acceptat sau nu de AFD: ";
 		std::cin >> cuvant;
 		std::cout << std::endl;
-		uint8_t verific = afd.verificare(cuvant);
+		uint8_t verific = afd.Verificare(cuvant);
 		switch (verific)
 		{
 		case 0:
@@ -32,7 +32,7 @@ void alegeAFD()
 		default:
 			break;
 		}
-		std::cout << "\nDoriti sa mai verificati un cuvant? y/n ";
+		std::cout << "\nDoriti sa mai verificati un cuvant? y/n: ";
 		std::cin >> optiune;
 		std::cout << std::endl;
 	} while (optiune == 'y' ? true : false);
@@ -53,7 +53,7 @@ void alegeAFN()
 		std::cout << "Introduceti un cuvant din " << (char)228 << "* pentru a verifica daca este acceptat sau nu de AFN: ";
 		std::cin >> cuvant;
 		std::cout << std::endl;
-		uint8_t verific = afn.verificare(cuvant);
+		uint8_t verific = afn.Verificare(cuvant);
 		switch (verific)
 		{
 		case 0:
@@ -68,7 +68,7 @@ void alegeAFN()
 		default:
 			break;
 		}
-		std::cout << "\nDoriti sa mai verificati un cuvant? y/n ";
+		std::cout << "\nDoriti sa mai verificati un cuvant? y/n: ";
 		std::cin >> optiune;
 		std::cout << std::endl;
 	} while (optiune == 'y' ? true : false);
@@ -79,7 +79,7 @@ int main()
 	uint16_t optiune;
 	do
 	{
-		std::cout << "Alegeti 1 pentru AFD, 2 pentru AFN sau 9 pentru a parasi programul:";
+		std::cout << "Alegeti 1 pentru AFD, 2 pentru AFN sau 9 pentru a parasi programul: ";
 		std::cin >> optiune;
 		std::cout << std::endl;
 		switch (optiune)

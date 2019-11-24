@@ -14,16 +14,16 @@ public:
 	friend std::ostream& operator<<(std::ostream& out, const AFN& afn);
 
 private:
-	uint8_t verificDelta(std::string cuvant, std::string stare);
-	std::string reverse(std::string cuvant);
+	uint8_t VerificDelta(std::string cuvant, std::string stare);
+	std::string Reverse(std::string cuvant);
 
 public:
-	uint8_t verificare(std::string cuvant);
+	uint8_t Verificare(std::string cuvant);
 
 private:
-	std::vector<std::string> stari;
-	std::vector<char> sigma;
-	std::vector<StareSimbolStare> delta;
-	std::string stareInitiala;
-	std::vector<std::string> finale;
+	std::vector<std::string> m_stari;
+	std::vector<char> m_sigma;
+	std::vector<StareSimbolStare> m_delta;
+	std::string m_stareInitiala;
+	std::vector<std::string> m_finale;
 };

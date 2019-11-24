@@ -9,7 +9,7 @@ std::istream& operator>>(std::istream& in, AFN& afn)
 	{
 		std::string str;
 		in >> str;
-		afn.stari.emplace_back(str);
+		afn.m_stari.emplace_back(str);
 		--numar;
 	}
 	in >> numar;
@@ -17,7 +17,7 @@ std::istream& operator>>(std::istream& in, AFN& afn)
 	{
 		char chr;
 		in >> chr;
-		afn.sigma.emplace_back(chr);
+		afn.m_sigma.emplace_back(chr);
 		--numar;
 	}
 	in >> numar;
@@ -30,16 +30,16 @@ std::istream& operator>>(std::istream& in, AFN& afn)
 		in >> str2;
 		AFN::StareSimbol stareSimbol = std::make_pair(str1, chr);
 		AFN::StareSimbolStare stareSimbolStare = std::make_pair(stareSimbol, str2);
-		afn.delta.emplace_back(stareSimbolStare);
+		afn.m_delta.emplace_back(stareSimbolStare);
 		--numar;
 	}
-	in >> afn.stareInitiala;
+	in >> afn.m_stareInitiala;
 	in >> numar;
 	while (numar)
 	{
 		std::string str;
 		in >> str;
-		afn.finale.emplace_back(str);
+		afn.m_finale.emplace_back(str);
 		--numar;
 	}
 	return in;
@@ -47,90 +47,78 @@ std::istream& operator>>(std::istream& in, AFN& afn)
 
 std::ostream& operator<<(std::ostream& out, const AFN& afn)
 {
-	//out << "\nStarile automatului sunt: ";
-	//for (const auto& stare : afn.stari)
-	//{
-	//	out << stare << " ";
-	//}
-	//out << "\n\nAlfabetul de intrare este: ";
-	//for (const auto& simbol : afn.sigma)
-	//{
-	//	out << simbol << " ";
-	//}
-	//out << "\n\nFunctia de tranzitie este:\n";
-	//for (const auto& stareSimbolStare : afn.delta)
-	//{
-	//	const auto& stareSimbol = stareSimbolStare.first;
-	//	out << (char)235 << "(" << stareSimbol.first << ", " << stareSimbol.second << ") = " << stareSimbolStare.second << '\n';
-	//}
-	//out << "\nStarea initiala este: " << afn.stareInitiala << '\n';
-	//out << "\nStarile finale sunt: ";
-	//for (const auto& stare : afn.finale)
-	//{
-	//	out << stare << " ";
-	//}
-	//out << "\n\n";
 	out << "  " << (char)235 << " ";
-	for (const auto& simbol : afn.sigma)
+	for (const auto& simbol : afn.m_sigma)
 	{
 		out << "| " << simbol << "  ";
 	}
-	for (const auto& stareLinie : afn.stari)
+	for (int index = 0; index < afn.m_stari.size(); index++)
 	{
+		const auto& stare = afn.m_stari[index];
 		out << "\n----";
-		for (const auto& simbol : afn.sigma)
+		for (const auto& simbol : afn.m_sigma)
 		{
 			out << "|----";
 		}
 		out << '\n';
-		if (stareLinie == afn.stareInitiala)
+		if (stare == afn.m_stareInitiala)
 		{
-			out << "->" << stareLinie;
+			out << "->" << stare;
 		}
 		else
 		{
 			bool ok = false;
-			for (const auto& stareFinala : afn.finale)
+			for (const auto& stareFinala : afn.m_finale)
 			{
-				if (stareLinie == stareFinala)
+				if (stare == stareFinala)
 				{
-					out << "F " << stareLinie;
+					out << "F " << stare;
 					ok = true;
 					break;
 				}
 			}
 			if (ok == false)
 			{
-				out << "  " << stareLinie;
+				out << "  " << stare;
 			}
 		}
-		for (const auto& simbol : afn.sigma)
+		bool ok = false;
+		for (const auto& simbol : afn.m_sigma)
 		{
-			bool ok = false;
-			for (const auto& stareSimbolStare : afn.delta)
+			bool ok1 = false;
+			for (const auto& tranzitie : afn.m_delta)
 			{
-				if (std::make_pair(stareLinie, simbol) == stareSimbolStare.first)
+				if (simbol == tranzitie.first.second)
 				{
-					out << "| " << stareSimbolStare.second << " ";
-					ok = true;
-					break;
+					out << "| " << tranzitie.second << " ";
+					ok1 = true;
+				}
+				else
+				{
+					out << "| -- ";
+					ok1 = true;
 				}
 			}
-			if (ok == false)
+			if (ok1 == true)
 			{
-				out << "| -- ";
+				ok = true;
 			}
+		}
+		if (ok == true)
+		{
+			--index;
+			out << '\n';
 		}
 	}
 	out << "\n\n";
 	return out;
 }
 
-uint8_t AFN::verificDelta(std::string  cuvant, std::string stare)
+uint8_t AFN::VerificDelta(std::string  cuvant, std::string stare)
 {
 	if (cuvant == "")
 	{
-		for(const auto& stareFinala : finale)
+		for(const auto& stareFinala : m_finale)
 		{ 
 			if (stare == stareFinala)
 			{
@@ -140,13 +128,13 @@ uint8_t AFN::verificDelta(std::string  cuvant, std::string stare)
 		return 1;
 	}
 	bool ok = false;
-	for (auto tranzitie : delta)
+	for (auto tranzitie : m_delta)
 	{
  		if (std::make_pair(stare, cuvant[cuvant.length() - 1]) == tranzitie.first)
 		{
 			std::string aux = cuvant;
 			aux.erase(aux.end()-1);
-			uint8_t verif = verificDelta(aux, tranzitie.second);
+			uint8_t verif = VerificDelta(aux, tranzitie.second);
 			if (verif == 0)
 			{
 				return 0;
@@ -164,7 +152,7 @@ uint8_t AFN::verificDelta(std::string  cuvant, std::string stare)
 	return 2;
 }
 
-std::string AFN::reverse(std::string cuvant)
+std::string AFN::Reverse(std::string cuvant)
 {
 	std::string cuvantNou = "";
 	for (int index = cuvant.length() - 1; index >= 0; --index)
@@ -174,7 +162,7 @@ std::string AFN::reverse(std::string cuvant)
 	return cuvantNou;
 }
 
-uint8_t AFN::verificare(std::string cuvant)
+uint8_t AFN::Verificare(std::string cuvant)
 {
-	return verificDelta(reverse(cuvant), stareInitiala);
+	return VerificDelta(Reverse(cuvant), m_stareInitiala);
 }
