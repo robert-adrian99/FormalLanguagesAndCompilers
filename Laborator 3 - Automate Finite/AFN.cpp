@@ -52,62 +52,42 @@ std::ostream& operator<<(std::ostream& out, const AFN& afn)
 	{
 		out << "| " << simbol << "  ";
 	}
-	for (int index = 0; index < afn.m_stari.size(); index++)
+	for (const auto& tranzitie : afn.m_delta)
 	{
-		const auto& stare = afn.m_stari[index];
 		out << "\n----";
 		for (const auto& simbol : afn.m_sigma)
 		{
 			out << "|----";
 		}
 		out << '\n';
-		if (stare == afn.m_stareInitiala)
-		{
-			out << "->" << stare;
-		}
-		else
-		{
-			bool ok = false;
-			for (const auto& stareFinala : afn.m_finale)
-			{
-				if (stare == stareFinala)
-				{
-					out << "F " << stare;
-					ok = true;
-					break;
-				}
-			}
-			if (ok == false)
-			{
-				out << "  " << stare;
-			}
-		}
 		bool ok = false;
+		if (tranzitie.first.first == afn.m_stareInitiala)
+		{
+			out << "->";
+			ok = true;
+		}
+		for (const auto& stareFinala : afn.m_finale)
+		{
+			if (tranzitie.first.first == stareFinala)
+			{
+				out << "F ";
+				ok = true;
+				break;
+			}
+		}
+		out << (ok == false ? " " : "") << tranzitie.first.first << (ok == false ? " " : "");
+		ok = false;
 		for (const auto& simbol : afn.m_sigma)
 		{
-			bool ok1 = false;
-			for (const auto& tranzitie : afn.m_delta)
+			if (tranzitie.first.second == simbol)
 			{
-				if (simbol == tranzitie.first.second)
-				{
-					out << "| " << tranzitie.second << " ";
-					ok1 = true;
-				}
-				else
-				{
-					out << "| -- ";
-					ok1 = true;
-				}
-			}
-			if (ok1 == true)
-			{
+				out << "| " << tranzitie.second << " ";
 				ok = true;
 			}
-		}
-		if (ok == true)
-		{
-			--index;
-			out << '\n';
+			else
+			{
+				out << "| -- ";
+			}
 		}
 	}
 	out << "\n\n";
