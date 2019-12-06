@@ -94,7 +94,7 @@ std::ostream& operator<<(std::ostream& out, const AFN& afn)
 	return out;
 }
 
-uint8_t AFN::VerificDelta(std::string  cuvant, std::string stare)
+uint8_t AFN::VerificDelta(std::string cuvant, std::string stare)
 {
 	if (cuvant == "")
 	{

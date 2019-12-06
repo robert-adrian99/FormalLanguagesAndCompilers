@@ -9,6 +9,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Laborator 2 - Gramatici", "
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Laborator 3 - Automate Finite", "Laborator 3 - Automate Finite\Laborator 3 - Automate Finite.vcxproj", "{8DDA03E4-4F17-4D75-BF87-94108F260216}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Laborator 4 - Minimizare AFD", "Laborator 4 - Minimizare AFD\Laborator 4 - Minimizare AFD.vcxproj", "{E12C64C1-1733-41BC-9522-00EA34016371}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x64 = Debug|x64
@@ -41,6 +43,14 @@ Global
 		{8DDA03E4-4F17-4D75-BF87-94108F260216}.Release|x64.Build.0 = Release|x64
 		{8DDA03E4-4F17-4D75-BF87-94108F260216}.Release|x86.ActiveCfg = Release|Win32
 		{8DDA03E4-4F17-4D75-BF87-94108F260216}.Release|x86.Build.0 = Release|Win32
+		{E12C64C1-1733-41BC-9522-00EA34016371}.Debug|x64.ActiveCfg = Debug|x64
+		{E12C64C1-1733-41BC-9522-00EA34016371}.Debug|x64.Build.0 = Debug|x64
+		{E12C64C1-1733-41BC-9522-00EA34016371}.Debug|x86.ActiveCfg = Debug|Win32
+		{E12C64C1-1733-41BC-9522-00EA34016371}.Debug|x86.Build.0 = Debug|Win32
+		{E12C64C1-1733-41BC-9522-00EA34016371}.Release|x64.ActiveCfg = Release|x64
+		{E12C64C1-1733-41BC-9522-00EA34016371}.Release|x64.Build.0 = Release|x64
+		{E12C64C1-1733-41BC-9522-00EA34016371}.Release|x86.ActiveCfg = Release|Win32
+		{E12C64C1-1733-41BC-9522-00EA34016371}.Release|x86.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
