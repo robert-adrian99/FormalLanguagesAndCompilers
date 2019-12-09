@@ -5,7 +5,7 @@
 
 class AFD
 {
-private:
+public:
 	using StareSimbol = std::pair<std::string, char>;
 	using StareSimbolStare = std::pair<StareSimbol, std::string>;
 
