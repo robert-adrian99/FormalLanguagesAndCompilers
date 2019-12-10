@@ -61,8 +61,8 @@ void MinimizareAFD::MarcareFinalNefinal()
 		{
 			const auto& perecheStare = stariMinimizat[coloana];
 			if (perecheStare != stare &&
-				((m_afdInitial.isFinal(perecheStare) && !m_afdInitial.isFinal(stare))
-					|| (!m_afdInitial.isFinal(perecheStare) && m_afdInitial.isFinal(stare))))
+				((m_afdInitial.isFinal(perecheStare) && !m_afdInitial.isFinal(stare)) || 
+				(!m_afdInitial.isFinal(perecheStare) && m_afdInitial.isFinal(stare))))
 			{
 				m_matriceEchivalenta[linie][coloana] = "x";
 			}
